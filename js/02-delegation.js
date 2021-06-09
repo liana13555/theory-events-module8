@@ -1,5 +1,6 @@
 /*
- * Делегирование событий
+ * Делегирование событий -используется когда есть однотипная коллекция элементов и мы хотим
+ обработать одно событие для всех элементов одинаково
  * - общий слушатель
  * - фильтр цели клика
  */
@@ -9,7 +10,10 @@ const container = document.querySelector('.js-container');
 container.addEventListener('click', onClick);
 
 function onClick(evt) {
-  if (evt.target.nodeName !== 'BUTTON') {
+  // console.log(evt.target);
+  // console.log(evt.target.textContent);
+  // console.log(evt.target.nodeName);
+  if (evt.target.nodeName !== 'BUTTON') {  // фильтр цели клика - фильтр цели делигации
     return;
   }
 

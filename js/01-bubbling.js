@@ -3,6 +3,7 @@
  * event.target - целевой (исходный) элемент
  * event.currentTarget - текущий элемент, на слушателе которого поймали событие
  */
+// Fokus, blur - не всплывают
 
 const refs = {
   parent: document.querySelector('#parent'),

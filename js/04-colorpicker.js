@@ -19,12 +19,9 @@ const cardsMarkup = createColorCardsMarkup(colors);
 
 paletteContainer.insertAdjacentHTML('beforeend', cardsMarkup);
 
-paletteContainer.addEventListener('click', onPaletteContainerClick);
-
 function createColorCardsMarkup(colors) {
-  return colors
-    .map(({ hex, rgb }) => {
-      return `
+  return colors.map(({ hex, rgb }) => {
+    return `
     <div class="color-card">
      <div><div><div> <div
      class="color-swatch"
@@ -38,22 +35,40 @@ function createColorCardsMarkup(colors) {
       </div>
     </div>
     `;
-    })
-    .join('');
+  }).join('');
 }
 
-function onPaletteContainerClick(evt) {
-  const isColorSwatchEl = evt.target.classList.contains('color-swatch');
+// сделаем чтобы по клику на цвет менять цвет боди
 
+paletteContainer.addEventListener('click', onPaletteContainerClick);
+
+function onPaletteContainerClick(evt) {
+  const isColorSwatchEl = evt.target.classList.contains('color-swatch')
+  // 'contains' - проверяет наличие класса на элементе
   if (!isColorSwatchEl) {
     return;
   }
+  // console.log(evt.target.dataset.hex);
+
+  // Добавим на элемент класс 'is-active'
+
+  // const swatchEl = evt.target;
+  // const parentColorCard = swatchEl.parentNode;  // 'parentNode' - хранит родителя элемента
+  // console.log(parentColorCard);  // но если добавим разметку, то сломается
+  //  поэтому найдем предка с помощью метода 'closest'  
+    
+  // const currentActiveCard = document.querySelector('.color-card.is-active');
+  //   if (currentActiveCard) {
+  //   currentActiveCard.classList.remove('is-active');
+  // }; // Выносим это в отдельную функцию:
+  removeActiveCardClass()
 
   const swatchEl = evt.target;
   const parentColorCard = swatchEl.closest('.color-card');
-
-  removeActiveCardClass();
+  
+  // parentColorCard.classList.add('is-active'); // выносим эту строку в функцию
   addActiveCardClass(parentColorCard);
+  // document.body.style.backgroundColor = swatchEl.dataset.hex;  // эту строку заменяем на:
   setBodyBgColor(swatchEl.dataset.hex);
 }
 
@@ -72,3 +87,36 @@ function removeActiveCardClass() {
 function addActiveCardClass(card) {
   card.classList.add('is-active');
 }
+
+//---------------------------------------------------
+
+// function onPaletteContainerClick(evt) {
+//   const isColorSwatchEl = evt.target.classList.contains('color-swatch');
+
+//   if (!isColorSwatchEl) {
+//     return;
+//   }
+
+//   const swatchEl = evt.target;
+//   const parentColorCard = swatchEl.closest('.color-card');
+
+//   removeActiveCardClass();
+//   addActiveCardClass(parentColorCard);
+//   setBodyBgColor(swatchEl.dataset.hex);
+// }
+
+// function setBodyBgColor(color) {
+//   document.body.style.backgroundColor = color;
+// }
+
+// function removeActiveCardClass() {
+//   const currentActiveCard = document.querySelector('.color-card.is-active');
+
+//   if (currentActiveCard) {
+//     currentActiveCard.classList.remove('is-active');
+//   }
+// }
+
+// function addActiveCardClass(card) {
+//   card.classList.add('is-active');
+// }
